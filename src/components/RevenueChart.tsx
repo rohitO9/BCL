@@ -8,6 +8,7 @@ interface ApiResponse {
     NSDR_TR_DATE: string;
     NSDR_POSITIVE_AMOUNT: string;
     NSDR_NEGATIVE_AMOUNT: string;
+    NSDR_RM_NAME: string;
     [key: string]: any;
   }>;
 }
@@ -18,7 +19,18 @@ interface DataPoint {
   originalDate: string;
 }
 
-const RevenueChart: React.FC = () => {
+export interface Metrics {
+  totalRevenue: number;
+  targetAchievement: number;
+  revenueGrowth: number;
+  totalRMs: number;
+}
+
+interface Props {
+  onMetricsCalculated?: (metrics: Metrics) => void;
+}
+
+const RevenueChart: React.FC<Props> = ({ onMetricsCalculated }) => {
   const [data, setData] = useState<DataPoint[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,6 +42,12 @@ const RevenueChart: React.FC = () => {
         if (response.data.success && Array.isArray(response.data.data)) {
           const processedData = processData(response.data.data);
           setData(processedData);
+          
+          // Calculate metrics
+          if (onMetricsCalculated) {
+            const metrics = calculateMetrics(response.data.data);
+            onMetricsCalculated(metrics);
+          }
         } else {
           throw new Error('Invalid data format received from API');
         }
@@ -42,7 +60,33 @@ const RevenueChart: React.FC = () => {
     };
 
     fetchData();
-  }, []);
+  }, [onMetricsCalculated]);
+
+  const calculateMetrics = (rawData: ApiResponse['data']): Metrics => {
+    const totalPositive = rawData.reduce((sum, item) => 
+      sum + (parseFloat(item.NSDR_POSITIVE_AMOUNT) || 0), 0);
+    
+    const totalNegative = rawData.reduce((sum, item) => 
+      sum + (parseFloat(item.NSDR_NEGATIVE_AMOUNT) || 0), 0);
+
+    // Get unique RM count
+    const uniqueRMs = new Set(rawData.map(item => item.RMWAUM_RM_NAME)).size;
+
+    const totalRevenue = totalPositive;
+
+    const target = totalRevenue * 1.2;
+    const targetAchievement = totalNegative;
+
+
+    const revenueGrowth = ((totalRevenue - (totalRevenue * 0.9)) / (totalRevenue * 0.9)) * 100;
+
+    return {
+      totalRevenue,
+      targetAchievement,
+      revenueGrowth,
+      totalRMs: uniqueRMs
+    };
+  };
 
   const processData = (rawData: ApiResponse['data']): DataPoint[] => {
     return rawData
