@@ -1,0 +1,147 @@
+/* 
+  
+  .dashboard-container {
+    padding: 2rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  h2 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .filter-bar label {
+    margin-right: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .filter-bar select {
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  .buttons button {
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #8884d8;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .buttons button:hover {
+    background: #6b63c4;
+  }
+  
+  .chart-scroll-wrapper {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .chart-inner {
+    min-height: 400px;
+  }
+   */
+   /* Basic Layout */
+   .dashboard-container {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .filter-bar,
+  .buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .filter-bar label,
+  .buttons button {
+    margin-right: 15px;
+  }
+  
+  .filter-bar select {
+    padding: 5px;
+    font-size: 14px;
+  }
+  
+  .buttons button {
+    padding: 8px 15px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .buttons button:hover {
+    background-color: #45a049;
+  }
+  
+  .chart-scroll-wrapper {
+    overflow-x: scroll;
+    margin-top: 20px;
+  }
+  
+  .chart-inner {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  @media (max-width: 768px) {
+    .controls {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .buttons {
+      margin-top: 10px;
+    }
+  
+    .chart-inner {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 20px;
+    }
+  
+    .buttons button {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+  }
+  
