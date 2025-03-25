@@ -1,17 +1,42 @@
-import React from 'react';
+
+import Bajaj from "../src/logo-bajaj-capital.png"
+
+import React, { useState } from 'react';
 import { Search, Home, BarChart2, Clock, Settings, ChevronDown, Filter, Edit2 } from 'lucide-react';
-import RevenueChart from './components/RevenueChart';
+import RevenueChart, { Metrics } from './components/RevenueChart';
 import RevenueDistribution from './components/RevenueDistribution';
 import MetricCard from './components/MetricCard';
 import SKUTable from './components/SKUTable';
-import Bajaj from "../src/logo-bajaj-capital.png"
 
 function App() {
+  const [metrics, setMetrics] = useState<Metrics>({
+    totalRevenue: 0,
+    targetAchievement: 0,
+    revenueGrowth: 0,
+    totalRMs: 0
+  });
+
+  const handleMetricsCalculated = (newMetrics: Metrics) => {
+    setMetrics(newMetrics);
+  };
+
+  const formatCurrency = (value: number) => {
+    const absValue = Math.abs(value);
+    if (absValue >= 10000000) { // 1 Cr
+      return `₹${(value / 10000000).toFixed(2)} Cr`;
+    } else if (absValue >= 100000) { // 1 Lakh
+      return `₹${(value / 100000).toFixed(2)} L`;
+    } else if (absValue >= 1000) { // 1k
+      return `₹${(value / 1000).toFixed(2)}k`;
+    }
+    return `₹${value.toFixed(2)}`;
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <div className="fixed left-0 top-0 h-full w-20 bg-white border-r border-gray-200 flex flex-col items-center py-4 space-y-8">
-        <div className="logo"><img src={Bajaj}/></div>
+      <div className="fixed left-0 top-0 h-full w-16 bg-white border-r border-gray-200 flex flex-col items-center py-4 space-y-8">
+        <div className="text-red-500 font-bold"><img src={Bajaj}/></div>
         <nav className="flex flex-col space-y-4">
           <button className="p-3 text-red-500 bg-red-50 rounded-lg"><Home size={20} /></button>
           <button className="p-3 text-gray-400 hover:bg-gray-100 rounded-lg"><BarChart2 size={20} /></button>
@@ -48,20 +73,20 @@ function App() {
         <div className="grid grid-cols-3 gap-4 mb-6">
           <MetricCard
             title="Total Revenue"
-            value="₹12M"
-            trend="+8% from last quarter"
-            trendPositive={true}
+            value={formatCurrency(metrics.totalRevenue)}
+            trend={`${metrics.revenueGrowth >= 0 ? '+' : ''}${metrics.revenueGrowth.toFixed(1)}% from last quarter`}
+            trendPositive={metrics.revenueGrowth >= 0}
           />
           <MetricCard
             title="Target Achievement"
-            value="₹17M"
-            trend="-7% below target Revenue"
-            trendPositive={false}
+            value={`${metrics.targetAchievement.toFixed(1)}%`}
+            trend={`${metrics.targetAchievement >= 100 ? 'Exceeded' : 'Below'} target Revenue`}
+            trendPositive={metrics.targetAchievement >= 100}
           />
           <MetricCard
-            title="Revenue YoY Growth"
-            value="12%"
-            trend="+ Positive Trend"
+            title="Total RMs"
+            value={metrics.totalRMs.toString()}
+            trend="Active Relationship Managers"
             trendPositive={true}
           />
         </div>
@@ -76,7 +101,7 @@ function App() {
                 <ChevronDown size={16} />
               </button>
             </div>
-            <RevenueChart />
+            <RevenueChart onMetricsCalculated={handleMetricsCalculated} />
           </div>
           <div className="bg-white p-4 rounded-xl shadow-sm">
             <h2 className="font-semibold mb-4">Revenue Distribution</h2>
