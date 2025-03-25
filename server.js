@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 
 app.use(cors({
-    origin: 'http://localhost:5177'
+    origin: '*'
   }));
   // Example endpoint
 app.get('/api/data', async (req, res) => {
