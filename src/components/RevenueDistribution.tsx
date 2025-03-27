@@ -35,7 +35,7 @@ const RevenueDistribution: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse>(
-          "http://4.240.99.207:3000/api/data"
+          "https://4.240.99.207:3000/api/data"
         );
         if (response.data.success && Array.isArray(response.data.data)) {
           const processedData = processData(response.data.data);
