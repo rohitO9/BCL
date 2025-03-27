@@ -38,7 +38,7 @@ const RevenueChart: React.FC<Props> = ({ onMetricsCalculated }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<ApiResponse>('http://4.240.99.207:3000/api/data');
+        const response = await axios.get<ApiResponse>('http://localhost:3000/api/data');
         if (response.data.success && Array.isArray(response.data.data)) {
           const processedData = processData(response.data.data);
           setData(processedData);
@@ -89,7 +89,8 @@ const RevenueChart: React.FC<Props> = ({ onMetricsCalculated }) => {
   };
 
   const processData = (rawData: ApiResponse['data']): DataPoint[] => {
-    return rawData
+    const limitedData = rawData.slice(0, 30);
+    return limitedData
       .map(item => {
         try {
           // Parse date parts

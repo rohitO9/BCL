@@ -72,19 +72,19 @@ function App() {
         {/* Metrics */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           <MetricCard
-            title="Total Revenue"
+            title="Total Positive Amount"
             value={formatCurrency(metrics.totalRevenue)}
             trend={`${metrics.revenueGrowth >= 0 ? '+' : ''}${metrics.revenueGrowth.toFixed(1)}% from last quarter`}
             trendPositive={metrics.revenueGrowth >= 0}
           />
           <MetricCard
-            title="Target Achievement"
-            value={`${metrics.targetAchievement.toFixed(1)}%`}
+            title="Total Negative Amount"
+            value={formatCurrency(metrics.targetAchievement)}
             trend={`${metrics.targetAchievement >= 100 ? 'Exceeded' : 'Below'} target Revenue`}
             trendPositive={metrics.targetAchievement >= 100}
           />
           <MetricCard
-            title="Total RMs"
+            title="RMs Managed"
             value={metrics.totalRMs.toString()}
             trend="Active Relationship Managers"
             trendPositive={true}
@@ -95,7 +95,7 @@ function App() {
         <div className="grid grid-cols-2 gap-6 mb-8">
           <div className="bg-white p-4 rounded-xl shadow-sm">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="font-semibold">Revenue vs Target</h2>
+              <h2 className="font-semibold">Net Sales</h2>
               <button className="flex items-center space-x-2 text-sm text-gray-600 border rounded-lg px-3 py-1">
                 <span>Last 30 days</span>
                 <ChevronDown size={16} />

@@ -35,7 +35,7 @@ const RevenueDistribution: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse>(
-          "http://4.240.99.207:3000/api/data"
+          "http://localhost:3000/api/data"
         );
         if (response.data.success && Array.isArray(response.data.data)) {
           const processedData = processData(response.data.data);
@@ -55,11 +55,12 @@ const RevenueDistribution: React.FC = () => {
   }, []);
 
   const processData = (rawData: ApiResponse["data"]): DataPoint[] => {
-    return rawData
+    const limitedData = rawData.slice(0, 30);
+    return limitedData
       .map((item) => {
         try {
-          const clientCode = item.TCCN_CLIENT_CODE;
-          const amount = parseFloat(item.TCCN_AMOUNT) || 0;
+          const clientCode = item.RMWAUM_RM_NAME;
+          const amount = item.RMWAUM_AUM || 0;
 
           return { clientCode, amount };
         } catch (error) {
