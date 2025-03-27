@@ -95,7 +95,7 @@ function App() {
         <div className="grid grid-cols-2 gap-6 mb-8">
           <div className="bg-white p-4 rounded-xl shadow-sm">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="font-semibold">Net Sales</h2>
+              <h2 className="font-semibold">Sales Analysis</h2>
               <button className="flex items-center space-x-2 text-sm text-gray-600 border rounded-lg px-3 py-1">
                 <span>Last 30 days</span>
                 <ChevronDown size={16} />
@@ -104,7 +104,7 @@ function App() {
             <RevenueChart onMetricsCalculated={handleMetricsCalculated} />
           </div>
           <div className="bg-white p-4 rounded-xl shadow-sm">
-            <h2 className="font-semibold mb-4">Revenue Distribution</h2>
+            <h2 className="font-semibold mb-4">RM Wise AUM</h2>
             <RevenueDistribution />
           </div>
         </div>

@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
   LabelList,
 } from "recharts";
+import "./new.css";
 
 interface ApiResponse {
   success: boolean;
@@ -35,7 +36,7 @@ const RevenueDistribution: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse>(
-          "http://localhost:3000/api/data"
+          "http://4.240.99.207:3000/api/data"
         );
         if (response.data.success && Array.isArray(response.data.data)) {
           const processedData = processData(response.data.data);
@@ -144,7 +145,6 @@ const RevenueDistribution: React.FC = () => {
 
         <Legend wrapperStyle={{ paddingTop: "10px" }} />
         <Bar dataKey="amount" fill="#4caf50">
-          {/* Adding labels to the bars */}
           <LabelList
             dataKey="amount"
             position="top"
